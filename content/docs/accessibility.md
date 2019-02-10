@@ -4,29 +4,30 @@ title: Accessibility
 permalink: docs/accessibility.html
 ---
 
-## Why Accessibility? {#why-accessibility}
+## 접근성을 지원해야 하는 이유? {#why-accessibility}
 
-Web accessibility (also referred to as [**a11y**](https://en.wiktionary.org/wiki/a11y)) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages.
+Web accessibility (also referred to as a11y) is the design and creation of websites that can be used by everyone. Accessibility support is necessary to allow assistive technology to interpret web pages.
+웹 접근성 ([**a11y**](https://en.wiktionary.org/wiki/a11y)라고도 함)은 모든 사람이 사용할 수있는 웹 사이트의 디자인과 생성입니다. 보조 기술로 웹 페이지를 해석 할 수 있도록 접근성 지원이 필요합니다.
 
-React fully supports building accessible websites, often by using standard HTML techniques.
+React는 표준 HTML 기술을 사용하여 접근성있는 웹 사이트를 완벽하게 지원합니다.
 
-## Standards and Guidelines {#standards-and-guidelines}
+## 표준 및 가이드라인 {#standards-and-guidelines}
 
 ### WCAG {#wcag}
 
-The [Web Content Accessibility Guidelines](https://www.w3.org/WAI/intro/wcag) provides guidelines for creating accessible web sites.
+[웹 문서 접근성 지침(Web Content Accessibility Guidelines)](https://www.w3.org/WAI/intro/wcag)은 접근 가능한 웹 사이트를 만드는 가이드라인을 제공합니다.
 
-The following WCAG checklists provide an overview:
+아래 나오는 WCAG 체크 리스트는 개요를 제공합니다.
 
-- [WCAG checklist from Wuhcag](https://www.wuhcag.com/wcag-checklist/)
-- [WCAG checklist from WebAIM](http://webaim.org/standards/wcag/checklist)
-- [Checklist from The A11Y Project](http://a11yproject.com/checklist.html)
+- [Wuhcag의 WCAG 체크 리스트](https://www.wuhcag.com/wcag-checklist/)
+- [WebAIM의 WCAG 체크 리스트](http://webaim.org/standards/wcag/checklist)
+- [A11Y 프로젝트의 체크 리스트](http://a11yproject.com/checklist.html)
 
 ### WAI-ARIA {#wai-aria}
 
-The [Web Accessibility Initiative - Accessible Rich Internet Applications](https://www.w3.org/WAI/intro/aria) document contains techniques for building fully accessible JavaScript widgets.
+[Web Accessibility Initiative - Accessible Rich Internet Applications](https://www.w3.org/WAI/intro/aria) 문서에는 완벽하게 접근 가능한 JavaScript 위젯을 만드는 기술이 포함되어 있습니다.
 
-Note that all `aria-*` HTML attributes are fully supported in JSX. Whereas most DOM properties and attributes in React are camelCased, these attributes should be hyphen-cased (also known as kebab-case, lisp-case, etc) as they are in plain HTML:
+모든 `aria- *` HTML 어트리뷰트는 JSX에서 완벽하게 지원됩니다. React에서 대부분의 DOM 프로퍼티와 어트리뷰트는 카멜 케이스(camelCase)이지만, 이런 어트리뷰트는 일반 HTML과 마찬가지로 하이픈 케이스(kebab-case또는 lisp-case 등이라고 함)를 사용해야 합니다.
 
 ```javascript{3,4}
 <input
@@ -39,16 +40,16 @@ Note that all `aria-*` HTML attributes are fully supported in JSX. Whereas most 
 />
 ```
 
-## Semantic HTML {#semantic-html}
+## 시맨틱 HTML {#semantic-html}
 Semantic HTML is the foundation of accessibility in a web application. Using the various HTML elements to reinforce the meaning of information
 in our websites will often give us accessibility for free.
+시맨틱 HTML은 웹 애플리케이션에서 접근성의 토대입니다. 다양한 HTML 엘리먼트를 사용하여 웹 사이트에 있는 정보의 의미를 강화하면 특별한 조치 없이 접근성이 충족되는 경우도 많습니다.
 
-- [MDN HTML elements reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+- [MDN HTML 엘리먼트 참조](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
 
-Sometimes we break HTML semantics when we add `<div>` elements to our JSX to make our React code work, especially when working with lists (`<ol>`, `<ul>` and `<dl>`) and the HTML `<table>`.
-In these cases we should rather use [React Fragments](/docs/fragments.html) to group together multiple elements.
+React 코드가 동작하도록 하기 위해 JSX에 `<div>` 엘리먼트를 추가 할 때가 있습니다. 특히 목록(`<ol>`, `<ul>` 또는 `<dl>`) 및 HTML `<table>` 엘리먼트를 작업하는 경우 종종 HTML 시맨틱을 어기게 됩니다. 이러한 경우에는 [React Fragment](/docs/fragments.html)를 사용하여 여러 엘리먼트를 그룹화하는 것이 좋습니다.
 
-For example,
+예를 들면,
 
 ```javascript{1,5,8}
 import React, { Fragment } from 'react';
@@ -74,13 +75,14 @@ function Glossary(props) {
 ```
 
 You can map a collection of items to an array of fragments as you would any other type of element as well:
+다른 유형의 엘리먼트와 마찬가지로 항목 모음을 Fragment 배열에 매핑 할 수 있습니다.
 
 ```javascript{6,9}
 function Glossary(props) {
   return (
     <dl>
       {props.items.map(item => (
-        // Fragments should also have a `key` prop when mapping collections
+        // 콜렉션을 매핑하는 경우 Fragment에 `key` prop이 있어야 함
         <Fragment key={item.id}>
           <dt>{item.term}</dt>
           <dd>{item.description}</dd>
@@ -91,7 +93,7 @@ function Glossary(props) {
 }
 ```
 
-When you don't need any props on the Fragment tag you can use the [short syntax](/docs/fragments.html#short-syntax), if your tooling supports it:
+Fragment 태그에 props가 필요하지 않은 경우에는 다음과 같이 [짧은 문법](/docs/fragments.html#short-syntax) (사용하고 있는 도구에서 이 기능을 제공한다면)을 사용할 수도 있습니다.
 
 ```javascript{3,6}
 function ListItem({ item }) {
@@ -104,20 +106,21 @@ function ListItem({ item }) {
 }
 ```
 
-For more info, see [the Fragments documentation](/docs/fragments.html).
+자세한 내용은 [Fragment 문서](/docs/fragments.html)를 참조하십시오.
 
-## Accessible Forms {#accessible-forms}
+## 접근 가능한 폼 {#accessible-forms}
 
-### Labeling {#labeling}
-Every HTML form control, such as `<input>` and `<textarea>`, needs to be labeled accessibly. We need to provide descriptive labels that are also exposed to screen readers.
+### 라벨링 {#labeling}
 
-The following resources show us how to do this:
+`<input>`과 `<textarea>` 같은 모든 HTML 엘리먼트는 접근 가능하도록 라벨을 지정해야 합니다. 스크린 리더에도 노출되는 설명이 포함된 라벨을 제공해야합니다.
 
-- [The W3C shows us how to label elements](https://www.w3.org/WAI/tutorials/forms/labels/)
-- [WebAIM shows us how to label elements](http://webaim.org/techniques/forms/controls)
-- [The Paciello Group explains accessible names](https://www.paciellogroup.com/blog/2017/04/what-is-an-accessible-name/)
+아래의 목록은 이를 위한 방법을 설명합니다.
 
-Although these standard HTML practices can be directly used in React, note that the `for` attribute is written as `htmlFor` in JSX:
+- [W3C의 엘리먼트에 라벨을 지정하는 방법에 대한 설명](https://www.w3.org/WAI/tutorials/forms/labels/)
+- [WebAIM의 엘리먼트에 라벨을 지정하는 방법에 대한 설명](http://webaim.org/techniques/forms/controls)
+- [Paciello Group 접근 가능한 이름에 대한 설명](https://www.paciellogroup.com/blog/2017/04/what-is-an-accessible-name/)
+
+이러한 표준 HTML 어트리뷰트는 React에서 바로 사용할 수 있지만, `for` 어트리뷰트는 JSX에서 `htmlFor`로 작성해야 합니다.
 
 ```javascript{1}
 <label htmlFor="namedInput">Name:</label>
